@@ -1,15 +1,26 @@
 package nl.fontys.tweetservice.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import nl.fontys.tweetservice.domain.Tweet;
+import nl.fontys.tweetservice.service.TweetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/") //zuul redirect hierna toe
 public class TweetController {
 
-    @GetMapping
-    public String helloWorld(){
-        return "hellworld from tweetcontroller";
+    @Autowired
+    private TweetService tweetService;
+
+    @PostMapping(path = "/newtweet")
+    public void newTweet(@RequestBody Tweet tweet){
+        this.tweetService.newTweet(tweet);
+    }
+
+    @GetMapping(path = "/getusertweets")
+    public List<Tweet> getUserTweets(@RequestParam int userID){
+        return this.tweetService.getUserTweets(userID);
     }
 }

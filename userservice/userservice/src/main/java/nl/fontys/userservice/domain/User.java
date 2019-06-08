@@ -1,7 +1,10 @@
 package nl.fontys.userservice.domain;
 
 
+import nl.fontys.tweetservice.domain.Tweet;
+
 import javax.persistence.*;
+import java.util.List;
 
 //todo to usermodel
 @Entity
@@ -13,6 +16,9 @@ public class User {
 
     @Column(unique = true)
     private String username;
+
+    @Transient
+    private List<Tweet> tweets;
 
     //Empty constructor needed for serialization
     public User() {
@@ -36,5 +42,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets = tweets;
     }
 }
